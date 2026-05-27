@@ -166,6 +166,7 @@ data/**
 !data/logs/.gitkeep
 ffmpeg/*.exe
 local-video-compressor.jar
+account-fee-system.jar
 
 tests/**/coverage/
 tests/e2e/reports

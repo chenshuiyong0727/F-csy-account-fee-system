@@ -13,23 +13,40 @@ body {
 }
 
 .app-aside {
-  background: linear-gradient(180deg, #edf6ff 0%, #ffffff 80%);
-  border-right: 1px solid #e5e7eb;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(20, 184, 166, 0.18), transparent 32%),
+    linear-gradient(180deg, #f0fdfa 0%, #ffffff 72%);
+  border-right: 1px solid #dbeafe;
 }
 
 .brand {
-  padding: 24px 20px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 24px 18px 18px;
   line-height: 1.4;
 }
 
-.brand strong {
+.brand img {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.2);
+}
+
+.brand strong,
+.brand span {
   display: block;
-  font-size: 20px;
+}
+
+.brand strong {
+  font-size: 16px;
 }
 
 .brand span {
   color: #64748b;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .app-header {

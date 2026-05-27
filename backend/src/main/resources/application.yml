@@ -35,3 +35,9 @@ logging:
 account-fee:
   auth:
     token-expire-hours: 24
+  system:
+    system-name: 会计服务费收款登记系统
+    company-name: 轻舟财税服务中心
+    logo-url: /brand/logo.svg
+    login-background-url: /brand/login-bg.png
+    login-slogan: 客户服务费收款、到期提醒与台账导出，一处登记，清楚可查。
