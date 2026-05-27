@@ -1,54 +1,26 @@
-######################################################################
-# Build Tools
+# Maven build output
+/target/
+*.class
+*.jar
+*.jar.original
 
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
+# Frontend build output copied into Spring Boot static resources
+/src/main/resources/static/*
+!/src/main/resources/static/.gitkeep
 
-target/
-ruoyi-quartz/bin/
-!.mvn/wrapper/maven-wrapper.jar
-
-######################################################################
-# IDE
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-nbproject/private/
-build/*
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-######################################################################
-# Claude Code
-.claude/settings.local.json
-
-######################################################################
-# Others
+# Logs and runtime files
 *.log
-*.xml.versionsBackup
-*.swp
-*.diff
+/logs/
 
-!*/build/*.java
-!*/build/*.html
-!*/build/*.xml
-/logs
-/db_doc/index.html
-/yjjk-report/src/main/resources
-/.vscode/settings.json
+# IDE and editor files
+/.idea/
+*.iml
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+
+# OS files
+.DS_Store
+Thumbs.db
