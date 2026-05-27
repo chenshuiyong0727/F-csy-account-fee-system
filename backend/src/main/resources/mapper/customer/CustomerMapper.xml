@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.accountfee.customer.mapper.CustomerMapper">
+    <sql id="expireBase">
+        SELECT
+            c.id AS customer_id,
+            c.company_name,
+            c.tax_no,
+            c.address,
+            c.remark,
+            MAX(r.charge_end_date) AS latest_charge_end_date,
+            DATEDIFF(MAX(r.charge_end_date), CURDATE()) AS remain_days,
+            CASE
+                WHEN MAX(r.charge_end_date) IS NULL THEN 'NO_RECORD'
+                WHEN DATEDIFF(MAX(r.charge_end_date), CURDATE()) &lt; 0 THEN 'EXPIRED'
+                WHEN DATEDIFF(MAX(r.charge_end_date), CURDATE()) &lt;= 5 THEN 'WARNING_5'
+                WHEN DATEDIFF(MAX(r.charge_end_date), CURDATE()) &lt;= 30 THEN 'WARNING_30'
+                WHEN DATEDIFF(MAX(r.charge_end_date), CURDATE()) &lt;= 60 THEN 'WARNING_60'
+                ELSE 'NORMAL'
+            END AS expire_status,
+            pc.contact_name AS primary_contact_name,
+            pc.contact_phone AS primary_contact_phone,
+            pc.contact_wechat AS primary_contact_wechat,
+            lr.receive_date AS latest_receive_date,
+            lr.amount AS latest_receive_amount
+        FROM acct_customer c
+        LEFT JOIN acct_service_fee_record r
+            ON c.id = r.customer_id
+           AND r.deleted = 0
+        LEFT JOIN acct_customer_contact pc
+            ON c.id = pc.customer_id
+           AND pc.deleted = 0
+           AND pc.is_primary = 1
+        LEFT JOIN acct_service_fee_record lr
+            ON lr.id = (
+                SELECT rr.id
+                FROM acct_service_fee_record rr
+                WHERE rr.customer_id = c.id
+                  AND rr.deleted = 0
+                ORDER BY rr.receive_date DESC, rr.id DESC
+                LIMIT 1
+            )
+        WHERE c.deleted = 0
+          AND c.status = 1
+        <if test="query != null and query.companyName != null and query.companyName != ''">
+          AND c.company_name LIKE CONCAT('%', #{query.companyName}, '%')
+        </if>
+        GROUP BY
+            c.id, c.company_name, c.tax_no, c.address, c.remark,
+            pc.contact_name, pc.contact_phone, pc.contact_wechat,
+            lr.receive_date, lr.amount
+    </sql>
+
+    <select id="selectExpirePage" resultType="com.yj.accountfee.customer.vo.CustomerExpireVO">
+        SELECT * FROM (
+            <include refid="expireBase"/>
+        ) t
+        <where>
+            <if test="query != null and query.expireStatus != null and query.expireStatus != ''">
+                t.expire_status = #{query.expireStatus}
+            </if>
+        </where>
+        ORDER BY
+            t.latest_charge_end_date IS NULL DESC,
+            t.latest_charge_end_date ASC,
+            t.customer_id DESC
+    </select>
+
+    <select id="selectExpireDetail" resultType="com.yj.accountfee.customer.vo.CustomerExpireVO">
+        SELECT * FROM (
+            <include refid="expireBase"/>
+        ) t
+        WHERE t.customer_id = #{customerId}
+    </select>
+</mapper>

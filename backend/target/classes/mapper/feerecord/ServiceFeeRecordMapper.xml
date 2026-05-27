@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.accountfee.feerecord.mapper.ServiceFeeRecordMapper">
+    <sql id="recordSelect">
+        SELECT
+            r.id,
+            r.customer_id,
+            r.company_name,
+            r.receive_date,
+            r.payer_name,
+            r.payer_contact_id,
+            cc.contact_name AS payer_contact_name,
+            r.pay_method,
+            r.receiver_name,
+            r.amount,
+            r.charge_end_date,
+            r.remark,
+            r.create_by,
+            r.create_time,
+            r.update_by,
+            r.update_time
+        FROM acct_service_fee_record r
+        LEFT JOIN acct_customer_contact cc
+            ON r.payer_contact_id = cc.id
+           AND cc.deleted = 0
+    </sql>
+
+    <sql id="recordWhere">
+        WHERE r.deleted = 0
+        <if test="query != null and query.customerId != null">
+            AND r.customer_id = #{query.customerId}
+        </if>
+        <if test="query != null and query.companyName != null and query.companyName != ''">
+            AND r.company_name LIKE CONCAT('%', #{query.companyName}, '%')
+        </if>
+        <if test="query != null and query.receiveDateStart != null">
+            AND r.receive_date &gt;= #{query.receiveDateStart}
+        </if>
+        <if test="query != null and query.receiveDateEnd != null">
+            AND r.receive_date &lt;= #{query.receiveDateEnd}
+        </if>
+        <if test="query != null and query.payerName != null and query.payerName != ''">
+            AND r.payer_name LIKE CONCAT('%', #{query.payerName}, '%')
+        </if>
+        <if test="query != null and query.payMethod != null and query.payMethod != ''">
+            AND r.pay_method = #{query.payMethod}
+        </if>
+        <if test="query != null and query.receiverName != null and query.receiverName != ''">
+            AND r.receiver_name LIKE CONCAT('%', #{query.receiverName}, '%')
+        </if>
+        <if test="query != null and query.chargeEndDateStart != null">
+            AND r.charge_end_date &gt;= #{query.chargeEndDateStart}
+        </if>
+        <if test="query != null and query.chargeEndDateEnd != null">
+            AND r.charge_end_date &lt;= #{query.chargeEndDateEnd}
+        </if>
+        <if test="query != null and query.amountMin != null">
+            AND r.amount &gt;= #{query.amountMin}
+        </if>
+        <if test="query != null and query.amountMax != null">
+            AND r.amount &lt;= #{query.amountMax}
+        </if>
+        <if test="query != null and query.dateType == 'month'">
+            AND DATE_FORMAT(r.receive_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+        </if>
+        <if test="query != null and query.dateType == 'year'">
+            AND YEAR(r.receive_date) = YEAR(CURDATE())
+        </if>
+    </sql>
+
+    <select id="selectRecordPage" resultType="com.yj.accountfee.feerecord.vo.FeeRecordVO">
+        <include refid="recordSelect"/>
+        <include refid="recordWhere"/>
+        ORDER BY r.receive_date DESC, r.id DESC
+    </select>
+
+    <select id="selectRecordList" resultType="com.yj.accountfee.feerecord.vo.FeeRecordVO">
+        <include refid="recordSelect"/>
+        <include refid="recordWhere"/>
+        ORDER BY r.receive_date DESC, r.id DESC
+    </select>
+
+    <select id="selectRecordDetail" resultType="com.yj.accountfee.feerecord.vo.FeeRecordVO">
+        <include refid="recordSelect"/>
+        WHERE r.deleted = 0
+          AND r.id = #{id}
+    </select>
+</mapper>
