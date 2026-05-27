@@ -16,6 +16,7 @@
       <el-button @click="reset">重置</el-button>
       <el-button type="success" @click="openForm()">新增收款</el-button>
       <el-button @click="download">导出</el-button>
+      <el-button type="warning" @click="downloadCashDetail">导出明细表</el-button>
     </div>
     <el-alert v-if="query.dateType === 'month'" title="当前筛选：本月收款记录" type="success" show-icon :closable="false" class="filter-alert" />
     <el-alert v-if="query.dateType === 'year'" title="当前筛选：本年收款记录" type="success" show-icon :closable="false" class="filter-alert" />
@@ -62,7 +63,7 @@ import { onMounted, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import FeeRecordForm from "../../components/FeeRecordForm.vue";
-import { deleteFeeRecord, exportFeeRecord, feeRecordPage } from "../../api/feeRecord";
+import { deleteFeeRecord, exportCashDetail, exportFeeRecord, feeRecordPage } from "../../api/feeRecord";
 import type { FeeRecord } from "../../types/common";
 
 const route = useRoute();
@@ -126,6 +127,11 @@ async function remove(id: number) {
 async function download() {
   const response: any = await exportFeeRecord(query);
   downloadBlob(response.data, "收款记录.xlsx");
+}
+
+async function downloadCashDetail() {
+  const response: any = await exportCashDetail(query);
+  downloadBlob(response.data, "现金收支明细表.xlsx");
 }
 
 function downloadBlob(blob: Blob, fileName: string) {

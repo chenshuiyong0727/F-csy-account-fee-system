@@ -10,6 +10,7 @@
         <el-menu-item index="/dashboard">首页统计</el-menu-item>
         <el-menu-item index="/customer">客户公司</el-menu-item>
         <el-menu-item index="/fee-record">收款记录</el-menu-item>
+        <el-menu-item index="/cash-detail">现金收支明细表</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

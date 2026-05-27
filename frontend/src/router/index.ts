@@ -4,6 +4,7 @@ import Dashboard from "../views/Dashboard.vue";
 import CustomerList from "../views/customer/CustomerList.vue";
 import CustomerDetail from "../views/customer/CustomerDetail.vue";
 import FeeRecordList from "../views/feeRecord/FeeRecordList.vue";
+import CashDetail from "../views/feeRecord/CashDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,7 +14,8 @@ const router = createRouter({
     { path: "/dashboard", component: Dashboard },
     { path: "/customer", component: CustomerList },
     { path: "/customer/detail/:id", component: CustomerDetail },
-    { path: "/fee-record", component: FeeRecordList }
+    { path: "/fee-record", component: FeeRecordList },
+    { path: "/cash-detail", component: CashDetail }
   ]
 });
 

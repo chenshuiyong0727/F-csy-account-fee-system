@@ -22,6 +22,7 @@ public class FeeRecordQueryDTO {
     private LocalDate chargeEndDateEnd;
     private BigDecimal amountMin;
     private BigDecimal amountMax;
+    private BigDecimal openingBalance;
     private String dateType;
     private Long pageNum = 1L;
     private Long pageSize = 10L;

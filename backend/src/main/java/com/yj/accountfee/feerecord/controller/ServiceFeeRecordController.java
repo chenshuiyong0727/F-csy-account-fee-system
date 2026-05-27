@@ -58,4 +58,9 @@ public class ServiceFeeRecordController {
     public void export(FeeRecordQueryDTO query, HttpServletResponse response) throws IOException {
         recordService.export(query, response);
     }
+
+    @GetMapping("/cash-detail-export")
+    public void cashDetailExport(FeeRecordQueryDTO query, HttpServletResponse response) throws IOException {
+        recordService.exportCashDetail(query, response);
+    }
 }

@@ -36,3 +36,7 @@ export function deleteFeeRecord(id: number) {
 export function exportFeeRecord(params: Record<string, unknown>) {
   return request.get("/fee-record/export", { params, responseType: "blob" });
 }
+
+export function exportCashDetail(params: Record<string, unknown>) {
+  return request.get("/fee-record/cash-detail-export", { params, responseType: "blob" });
+}
