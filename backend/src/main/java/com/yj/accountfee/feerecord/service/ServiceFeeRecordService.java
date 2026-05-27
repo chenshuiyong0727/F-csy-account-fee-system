@@ -37,7 +37,7 @@ public class ServiceFeeRecordService {
 
     public PageResult<FeeRecordVO> page(FeeRecordQueryDTO query) {
         Page<FeeRecordVO> page = new Page<>(query.getPageNum(), query.getPageSize());
-        recordMapper.selectRecordPage(page, query);
+        page.setRecords(recordMapper.selectRecordPage(page, query));
         return new PageResult<>(page.getTotal(), page.getRecords());
     }
 

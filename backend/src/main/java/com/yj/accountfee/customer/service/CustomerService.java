@@ -43,7 +43,7 @@ public class CustomerService {
 
     public PageResult<CustomerExpireVO> expirePage(CustomerQueryDTO query) {
         Page<CustomerExpireVO> page = new Page<>(query.getPageNum(), query.getPageSize());
-        customerMapper.selectExpirePage(page, query);
+        page.setRecords(customerMapper.selectExpirePage(page, query));
         return new PageResult<>(page.getTotal(), page.getRecords());
     }
 

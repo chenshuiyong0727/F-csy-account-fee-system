@@ -2,7 +2,6 @@ F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\contact\entity
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\auth\SysUser.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\feerecord\dto\FeeRecordQueryDTO.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\auth\LoginResponse.java
-F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\config\StaticResourceConfig.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\common\GlobalExceptionHandler.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\common\PageResult.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\AccountFeeApplication.java
@@ -13,6 +12,7 @@ F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\contact\dto\Co
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\feerecord\dto\FeeRecordSaveDTO.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\feerecord\entity\ServiceFeeRecord.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\auth\LoginRequest.java
+F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\config\SpaFallbackController.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\customer\entity\Customer.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\dashboard\DashboardMapper.java
 F:\csy\account-fee-system\backend\src\main\java\com\yj\accountfee\common\ApiResult.java
