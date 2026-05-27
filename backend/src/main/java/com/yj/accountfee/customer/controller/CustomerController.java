@@ -7,7 +7,9 @@ import com.yj.accountfee.customer.dto.CustomerSaveDTO;
 import com.yj.accountfee.customer.service.CustomerService;
 import com.yj.accountfee.customer.vo.CustomerExpireVO;
 import com.yj.accountfee.customer.vo.CustomerVO;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +36,11 @@ public class CustomerController {
     @GetMapping("/expire-page")
     public ApiResult<PageResult<CustomerExpireVO>> expirePage(CustomerQueryDTO query) {
         return ApiResult.success(customerService.expirePage(query));
+    }
+
+    @GetMapping("/expire-export")
+    public void expireExport(CustomerQueryDTO query, HttpServletResponse response) throws IOException {
+        customerService.exportExpire(query, response);
     }
 
     @GetMapping("/{id}")

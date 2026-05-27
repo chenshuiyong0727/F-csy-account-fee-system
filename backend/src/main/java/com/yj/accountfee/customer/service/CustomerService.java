@@ -2,6 +2,7 @@ package com.yj.accountfee.customer.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.alibaba.excel.EasyExcel;
 import com.yj.accountfee.common.BizException;
 import com.yj.accountfee.common.CurrentUser;
 import com.yj.accountfee.common.PageResult;
@@ -9,8 +10,13 @@ import com.yj.accountfee.customer.dto.CustomerQueryDTO;
 import com.yj.accountfee.customer.dto.CustomerSaveDTO;
 import com.yj.accountfee.customer.entity.Customer;
 import com.yj.accountfee.customer.mapper.CustomerMapper;
+import com.yj.accountfee.customer.vo.CustomerExpireExportRow;
 import com.yj.accountfee.customer.vo.CustomerExpireVO;
 import com.yj.accountfee.customer.vo.CustomerVO;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -39,6 +45,19 @@ public class CustomerService {
         Page<CustomerExpireVO> page = new Page<>(query.getPageNum(), query.getPageSize());
         customerMapper.selectExpirePage(page, query);
         return new PageResult<>(page.getTotal(), page.getRecords());
+    }
+
+    public void exportExpire(CustomerQueryDTO query, HttpServletResponse response) throws IOException {
+        var rows = customerMapper.selectExpireList(query).stream()
+            .map(this::toExpireExportRow)
+            .toList();
+        String fileName = URLEncoder.encode("客户到期列表.xlsx", StandardCharsets.UTF_8).replace("+", "%20");
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + fileName);
+        EasyExcel.write(response.getOutputStream(), CustomerExpireExportRow.class)
+            .sheet("客户到期列表")
+            .doWrite(rows);
     }
 
     public CustomerVO detail(Long id) {
@@ -86,5 +105,42 @@ public class CustomerService {
         CustomerVO vo = new CustomerVO();
         BeanUtils.copyProperties(customer, vo);
         return vo;
+    }
+
+    private CustomerExpireExportRow toExpireExportRow(CustomerExpireVO vo) {
+        return new CustomerExpireExportRow(
+            vo.getCompanyName(),
+            vo.getLatestChargeEndDate() == null ? "" : vo.getLatestChargeEndDate().toString(),
+            vo.getRemainDays(),
+            expireStatusName(vo.getExpireStatus()),
+            vo.getPrimaryContactName(),
+            vo.getPrimaryContactPhone(),
+            vo.getPrimaryContactWechat(),
+            vo.getLatestReceiveDate() == null ? "" : vo.getLatestReceiveDate().toString(),
+            vo.getLatestReceiveAmount() == null ? "" : vo.getLatestReceiveAmount().toPlainString(),
+            vo.getRemark()
+        );
+    }
+
+    private String expireStatusName(String status) {
+        if ("NORMAL".equals(status)) {
+            return "正常";
+        }
+        if ("WARNING_60".equals(status)) {
+            return "60天内到期";
+        }
+        if ("WARNING_30".equals(status)) {
+            return "30天内到期";
+        }
+        if ("WARNING_5".equals(status)) {
+            return "5天内到期";
+        }
+        if ("EXPIRED".equals(status)) {
+            return "已过期/欠费";
+        }
+        if ("NO_RECORD".equals(status)) {
+            return "无收费记录";
+        }
+        return status;
     }
 }

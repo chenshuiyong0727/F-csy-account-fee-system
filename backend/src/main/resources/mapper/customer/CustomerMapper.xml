@@ -66,6 +66,21 @@
             t.customer_id DESC
     </select>
 
+    <select id="selectExpireList" resultType="com.yj.accountfee.customer.vo.CustomerExpireVO">
+        SELECT * FROM (
+            <include refid="expireBase"/>
+        ) t
+        <where>
+            <if test="query != null and query.expireStatus != null and query.expireStatus != ''">
+                t.expire_status = #{query.expireStatus}
+            </if>
+        </where>
+        ORDER BY
+            t.latest_charge_end_date IS NULL DESC,
+            t.latest_charge_end_date ASC,
+            t.customer_id DESC
+    </select>
+
     <select id="selectExpireDetail" resultType="com.yj.accountfee.customer.vo.CustomerExpireVO">
         SELECT * FROM (
             <include refid="expireBase"/>

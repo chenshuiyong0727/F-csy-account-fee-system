@@ -11,5 +11,7 @@ import org.apache.ibatis.annotations.Param;
 public interface CustomerMapper extends BaseMapper<Customer> {
     List<CustomerExpireVO> selectExpirePage(Page<CustomerExpireVO> page, @Param("query") CustomerQueryDTO query);
 
+    List<CustomerExpireVO> selectExpireList(@Param("query") CustomerQueryDTO query);
+
     CustomerExpireVO selectExpireDetail(@Param("customerId") Long customerId);
 }

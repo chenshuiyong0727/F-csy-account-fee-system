@@ -2,6 +2,11 @@
 chcp 65001 > nul
 title 构建会计服务费收款登记系统
 
+if exist "D:\Java\21\bin\java.exe" (
+    set "JAVA_HOME=D:\Java\21"
+    set "PATH=D:\Java\21\bin;%PATH%"
+)
+
 echo [1/5] 安装前端依赖...
 cd frontend
 call npm install

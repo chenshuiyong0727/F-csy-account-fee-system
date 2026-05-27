@@ -20,8 +20,8 @@ request.interceptors.request.use((config) => {
   return config;
 });
 
-request.interceptors.response.use(
-  (response) => {
+(request.interceptors.response.use as any)(
+  (response: any) => {
     const data = response.data as ApiResult<unknown>;
     if (response.config.responseType === "blob") {
       return response;
@@ -36,7 +36,7 @@ request.interceptors.response.use(
     }
     return data.data;
   },
-  (error) => {
+  (error: any) => {
     ElMessage.error(error.response?.data?.msg || "网络请求失败");
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
