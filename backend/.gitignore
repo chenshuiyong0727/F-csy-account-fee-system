@@ -8,6 +8,8 @@
 # Frontend build output copied into Spring Boot static resources
 /src/main/resources/static/*
 !/src/main/resources/static/.gitkeep
+!/src/main/resources/static/brand/
+!/src/main/resources/static/brand/**
 
 # Logs and runtime files
 *.log

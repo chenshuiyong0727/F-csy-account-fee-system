@@ -152,6 +152,8 @@ yarn-error.log*
 frontend/dist/
 backend/src/main/resources/static/*
 !backend/src/main/resources/static/.gitkeep
+!backend/src/main/resources/static/brand/
+!backend/src/main/resources/static/brand/**
 data/**
 !data/
 !data/input/
