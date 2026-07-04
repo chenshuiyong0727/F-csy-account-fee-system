@@ -5,6 +5,7 @@ import CustomerList from "../views/customer/CustomerList.vue";
 import CustomerDetail from "../views/customer/CustomerDetail.vue";
 import FeeRecordList from "../views/feeRecord/FeeRecordList.vue";
 import CashDetail from "../views/feeRecord/CashDetail.vue";
+import WeightManagement from "../views/weight/WeightManagement.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,7 +16,8 @@ const router = createRouter({
     { path: "/customer", component: CustomerList },
     { path: "/customer/detail/:id", component: CustomerDetail },
     { path: "/fee-record", component: FeeRecordList },
-    { path: "/cash-detail", component: CashDetail }
+    { path: "/cash-detail", component: CashDetail },
+    { path: "/weight-management", component: WeightManagement }
   ]
 });
 

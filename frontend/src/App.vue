@@ -14,6 +14,7 @@
         <el-menu-item index="/customer">客户公司</el-menu-item>
         <el-menu-item index="/fee-record">收款记录</el-menu-item>
         <el-menu-item index="/cash-detail">现金收支明细表</el-menu-item>
+        <el-menu-item index="/weight-management">体重管理</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>

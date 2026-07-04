@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+    <meta name="theme-color" content="#0aa58f" />
+    <link rel="icon" href="/brand/logo.jpg" />
+    <title>体重趋势</title>
+  </head>
+  <body>
+    <main id="app" class="page" aria-busy="true">
+      <div id="loading" class="state-card"><span class="loader"></span><p>正在加载减重记录…</p></div>
+      <div id="error" class="state-card hidden"><div class="state-icon">!</div><h2>暂时无法查看</h2><p id="errorMessage">请稍后重试</p><button id="retryButton">重新加载</button></div>
+
+      <div id="content" class="hidden">
+        <section class="hero">
+          <div class="hero-orb hero-orb-one"></div><div class="hero-orb hero-orb-two"></div>
+          <div class="user-row">
+            <div class="user-left">
+              <img id="avatar" class="avatar" src="/brand/person.png" alt="头像" />
+              <div><div id="nickname" class="nickname">最硬</div><div class="user-desc">体重管理记录</div></div>
+            </div>
+            <div class="days-badge">已坚持 <strong id="days">0</strong> 天</div>
+          </div>
+          <div class="weight-box">
+            <div class="weight-main"><span id="todayWeight" class="weight">--</span><span class="unit">斤</span></div>
+            <div class="weight-label">最新体重</div>
+          </div>
+          <div class="hero-metrics">
+            <div class="hero-metric"><div class="metric-value"><span id="fatRate">--</span><small id="fatEstimated" class="estimate-tag hidden">估算</small></div><div class="metric-name">脂肪比例</div></div>
+            <div class="hero-metric"><div id="bmi" class="metric-value">--</div><div class="metric-name">BMI</div></div>
+            <div class="hero-metric"><div class="metric-value"><span id="distanceTarget">--</span> 斤</div><div class="metric-name">距离目标</div></div>
+          </div>
+        </section>
+
+        <section class="summary-card">
+          <div class="section-heading"><div><span class="eyebrow">阶段成果</span><h2>每一次记录都有意义</h2></div><span id="lastRecordDate" class="updated-at"></span></div>
+          <div class="summary-grid">
+            <div class="summary-item"><div id="changeBox" class="summary-value">--</div><div class="summary-label">较上次</div></div>
+            <div class="summary-item"><div class="summary-value"><span id="loss">--</span><small>斤</small></div><div class="summary-label">已减重</div></div>
+            <div class="summary-item"><div class="summary-value"><span id="targetWeight">--</span><small>斤</small></div><div class="summary-label">目标体重</div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="ring-card">
+              <div id="ring" class="ring"><div class="ring-inner"><strong id="progressPercent">0%</strong><span>目标进度</span></div></div>
+            </div>
+            <div class="progress-info">
+              <span class="eyebrow">目标正在靠近</span>
+              <h3>已经减掉 <em id="lossText">--</em> 斤</h3>
+              <p>从 <span id="startWeightText">--</span> 斤出发，距离目标还差 <strong id="distanceText">--</strong> 斤。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="chart-card">
+          <div class="section-heading"><div><span class="eyebrow">长期趋势</span><h2>体重变化</h2></div><span class="chart-unit">单位：斤</span></div>
+          <div id="chart" role="img" aria-label="体重趋势折线图"></div>
+          <div class="date-range">记录周期：<strong id="startDate">--</strong><span>～</span><strong id="endDate">--</strong></div>
+        </section>
+
+        <footer>坚持记录，比单日数字更重要。</footer>
+      </div>
+    </main>
+    <script type="module" src="/src/weight/main.ts"></script>
+  </body>
+</html>

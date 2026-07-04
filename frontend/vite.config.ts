@@ -3,11 +3,21 @@ import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   plugins: [vue()],
+  build: {
+    rollupOptions: {
+      input: { main: "index.html", weight: "weight.html" }
+    }
+  },
   server: {
+    host: "0.0.0.0",
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://localhost:18787",
+        target: process.env.VITE_API_PROXY_TARGET || "http://localhost:18787",
+        changeOrigin: true
+      },
+      "/uploads": {
+        target: process.env.VITE_API_PROXY_TARGET || "http://localhost:18787",
         changeOrigin: true
       }
     }

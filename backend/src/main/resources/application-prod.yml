@@ -17,6 +17,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 8MB
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
@@ -35,6 +39,8 @@ logging:
 account-fee:
   auth:
     token-expire-hours: 24
+  weight:
+    upload-dir: D:/account-fee-system/uploads/weight
   system:
     system-name: 钇旺亿会计服务费收款登记系统
     company-name: 钇旺亿财税服务中心
